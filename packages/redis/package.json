@@ -1,0 +1,23 @@
+{
+  "name": "@fahren/redis",
+  "version": "0.1.0-alpha.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "if [ -d dist ]; then rimraf dist; fi"
+  },
+  "dependencies": {
+    "@fahren/core": "workspace:*",
+    "@fahren/secrets": "workspace:*",
+    "ioredis": "^5.3.2"
+  },
+  "devDependencies": {
+    "@types/ioredis": "^5.0.0",
+    "typescript": "^5.0.0",
+    "rimraf": "^5.0.0"
+  }
+}

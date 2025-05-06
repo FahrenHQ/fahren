@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "0:5432"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "PGPASSWORD=$$POSTGRES_PASSWORD pg_isready -U $$POSTGRES_USER --dbname=$$POSTGRES_DB",
+        ]
+      interval: 5s
+      retries: 5
+      start_period: 10s
+  nextjs:
+    image: node:20
+    container_name: nextjs
+    working_dir: /app
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    environment:
+      DATABASE_URL: "postgres://postgres:postgres@localhost:5432"
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev"
+
+volumes:
+  node_modules:

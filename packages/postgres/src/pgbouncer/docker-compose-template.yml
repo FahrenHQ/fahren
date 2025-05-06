@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: fahren_$1_postgres
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: testdb
+    ports:
+      - "0:5432"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "PGPASSWORD=$$POSTGRES_PASSWORD pg_isready -U $$POSTGRES_USER --dbname=$$POSTGRES_DB",
+        ]
+      interval: 5s
+      retries: 5
+      start_period: 10s
+
+  pgbouncer:
+    image: edoburu/pgbouncer
+    container_name: fahren_$1_pgbouncer
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # It is very important to use '*' as the database. Otherwise tests will fail.
+      # The '*' acts as a wildcard for every database request, signaling that any configured database
+      # will be routed to the same host.
+      DATABASE_URLS: "postgresql://tenant_role:tenant_role_password@postgres:5432/*,postgresql://testuser:testpassword@postgres:5432/*,postgresql://tenant_prod:secret_password_prod@postgres:5432/tenantdb_prod,postgresql://tenant_dev:secret_password_dev@postgres:5432/tenantdb_dev,postgresql://wrong_user:wrong_password@postgres/tenant_template"
+      POOL_MODE: $2
+      AUTH_TYPE: plain
+    ports:
+      - "0:5432"

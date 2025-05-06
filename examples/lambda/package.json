@@ -1,0 +1,23 @@
+{
+  "name": "fahren-lambda-example",
+  "version": "1.0.0",
+  "description": "Example Lambda function using Fahren for multi-tenant resource management",
+  "scripts": {
+    "start": "ts-node test.ts"
+  },
+  "dependencies": {
+    "@fahren/redis": "workspace:*",
+    "@fahren/postgres": "workspace:*",
+    "@fahren/secrets": "workspace:*",
+    "@fahren/core": "workspace:*",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^20",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@fahren/core",
+  "version": "0.1.0-alpha.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "if [ -d dist ]; then rimraf dist; fi"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20"
+  }
+}
