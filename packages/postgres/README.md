@@ -198,4 +198,4 @@ const postgres = new Postgres()
 ## Related Resources
 
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
-- [Fahren Documentation](https://github.com/joacoc/fahren)
+- [Fahren Documentation](https://github.com/fahrenhq/fahren)

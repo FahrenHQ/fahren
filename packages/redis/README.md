@@ -93,4 +93,4 @@ await redisManagement.deleteTenant("tenant123");
 ## Related Resources
 
 - [Redis ACL Documentation](https://redis.io/docs/manual/security/acl/)
-- [Fahren Documentation](https://github.com/joacoc/fahren)
+- [Fahren Documentation](https://github.com/fahrenhq/fahren)

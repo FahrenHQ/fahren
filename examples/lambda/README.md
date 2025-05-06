@@ -79,6 +79,6 @@ The function includes error handling for:
 
 ## Related Resources
 
-- [Fahren Documentation](https://github.com/joacoc/fahren)
+- [Fahren Documentation](https://github.com/fahrenhq/fahren)
 - [AWS Lambda Documentation](https://docs.aws.amazon.com/lambda/)
 - [Redis ACL Documentation](https://redis.io/docs/manual/security/acl/)

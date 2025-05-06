@@ -20,7 +20,7 @@ This repository demonstrates how to implement a Node.js Express application usin
 1. Clone the repository
 
 ```bash
-   git clone https://github.com/joacoc/fahren/fahren.git
+   git clone https://github.com/fahrenhq/fahren/fahren.git
    cd fahren/examples/express
 ```
 

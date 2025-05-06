@@ -55,8 +55,8 @@ In Fahren, **resources** are infrastructure components that support at least one
 
 ### Supported Databases
 
-- **[Postgres](https://github.com/joacoc/fahren/tree/main/packages/postgres)** - Row-Level Security (RLS), schema, and database-based isolation
-- **[Redis](https://github.com/joacoc/fahren/tree/main/packages/redis)** - Prefix and ACL-based isolation with secrets management
+- **[Postgres](https://github.com/fahrenhq/fahren/tree/main/packages/postgres)** - Row-Level Security (RLS), schema, and database-based isolation
+- **[Redis](https://github.com/fahrenhq/fahren/tree/main/packages/redis)** - Prefix and ACL-based isolation with secrets management
 
 ## Usage Examples
 
@@ -102,11 +102,11 @@ await tenantRedisClient.set("key", "value");
 
 ## Examples
 
-For complete multi-tenant application examples, visit the [examples folder](https://github.com/joacoc/fahren/tree/main/examples).
+For complete multi-tenant application examples, visit the [examples folder](https://github.com/fahrenhq/fahren/tree/main/examples).
 
 ## API Reference
 
 For detailed API documentation of each resource, refer to the specific package documentation:
 
-- [@fahren/postgres](https://github.com/joacoc/fahren/tree/main/packages/postgres)
-- [@fahren/redis](https://github.com/joacoc/fahren/tree/main/packages/redis)
+- [@fahren/postgres](https://github.com/fahrenhq/fahren/tree/main/packages/postgres)
+- [@fahren/redis](https://github.com/fahrenhq/fahren/tree/main/packages/redis)

@@ -12,7 +12,7 @@ This is an example chat application demonstrating the use of the `fahren` framew
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/joacoc/fahren/fahren.git
+   git clone https://github.com/fahrenhq/fahren/fahren.git
    cd fahren/examples/nextjs_chat
    pnpm install
    ```
