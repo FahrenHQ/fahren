@@ -37,7 +37,7 @@ export class ExtendedRedisClient extends RedisClient {
 
 export default abstract class RedisResource extends Resource {
   protected config?: RedisOptions;
-  protected adminRedis: RedisClient;
+  // protected adminRedis: RedisClient;
 
   constructor({
     clientConfig,
@@ -51,9 +51,6 @@ export default abstract class RedisResource extends Resource {
     if (this.config) {
       this.config.keyPrefix = undefined;
     }
-    this.adminRedis = this.config
-      ? new RedisClient(this.config)
-      : new RedisClient();
   }
 
   protected getPattern() {
@@ -77,20 +74,33 @@ export default abstract class RedisResource extends Resource {
 }
 
 export class RedisManagementBase extends RedisResource {
+  protected adminRedis: RedisClient;
+
+  constructor({
+    clientConfig,
+    id,
+  }: {
+    clientConfig?: ClientConfig;
+    id?: string;
+  }) {
+    super({ id, clientConfig });
+    this.adminRedis = this.config
+      ? new RedisClient(this.config)
+      : new RedisClient();
+  }
+
   async deleteTenant(tenantId: string) {
     const prefix = await this.buildKeyspacePrefix(tenantId);
 
     const keys = await this.adminRedis.keys(prefix + "*");
     if (keys.length > 0) {
-      await this.adminRedis.del(...keys);
+      const pipeline = this.adminRedis.pipeline();
+      keys.forEach((key) => pipeline.del(key));
+      await pipeline.exec();
     }
   }
 
   async end() {
     await this.adminRedis.quit();
-  }
-
-  getAdminClient() {
-    return this.adminRedis;
   }
 }

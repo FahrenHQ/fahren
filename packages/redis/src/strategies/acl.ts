@@ -92,6 +92,13 @@ export class RedisAclManagement extends RedisManagementBase {
    * @returns A promise that resolves when the tenant is successfully created.
    */
   async createTenant(tenantId: string) {
+    const res = await this.adminRedis.call("CONFIG", "GET", "aclfile");
+    if (Array.isArray(res) && !res[1]) {
+      throw new Error(
+        "Redis ACL file is not configured (CONFIG GET aclfile returned empty). ACL changes will not persist."
+      );
+    }
+
     const generatedTenantPassword = this.options?.provision?.acl
       ?.generatePassword
       ? await this.options?.provision?.acl?.generatePassword(tenantId)
@@ -125,6 +132,8 @@ export class RedisAclManagement extends RedisManagementBase {
       );
     }
 
+    await this.adminRedis.call("ACL", "SAVE");
+
     await this.tenantsSecretsManager.store(tenantId, {
       ...this.config,
       username: tenantId,
@@ -134,9 +143,20 @@ export class RedisAclManagement extends RedisManagementBase {
   }
 
   async deleteTenant(tenantId: string) {
+    const res = await this.adminRedis.call("CONFIG", "GET", "aclfile");
+    if (Array.isArray(res) && !res[1]) {
+      throw new Error(
+        "Redis ACL file is not configured (CONFIG GET aclfile returned empty). ACL changes will not persist."
+      );
+    }
     await super.deleteTenant(tenantId);
-    await this.adminRedis.call("ACL", "DELUSER", tenantId);
-    await this.tenantsSecretsManager.remove(tenantId);
+    const pipeline = this.adminRedis.pipeline();
+    pipeline.call("ACL", "DELUSER", tenantId);
+    pipeline.call("ACL", "SAVE");
+    await pipeline.exec();
+    // await this.adminRedis.call("ACL", "DELUSER", tenantId);
+    // await this.adminRedis.call("ACL", "SAVE");
+    // await this.tenantsSecretsManager.remove(tenantId);
   }
 }
 

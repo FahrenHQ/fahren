@@ -6,6 +6,7 @@ import {
 } from "testcontainers";
 import { Client, PoolConfig } from "pg";
 import * as fs from "fs";
+import * as os from "os";
 import { Vault, Static as StaticProvider } from "@fahren/secrets";
 import PgBouncer from "../src/pgbouncer";
 import {
@@ -21,6 +22,7 @@ import {
   PgBouncerDatabaseTenants as DatabaseTenants,
 } from "../src/pgbouncer/strategies/database";
 import { DEFAULT_SETTINGS_TENANT_FIELD } from "../src/strategies/base";
+import path from "path";
 
 export function generateDockerComposeFile(
   testName: string,
@@ -38,10 +40,13 @@ export function generateDockerComposeFile(
     .replace(/\$1/g, uniqueName)
     .replace(/\$2/g, poolMode);
 
-  const composePath = `packages/postgres/pgbouncer/temp/docker-compose-${uniqueName}.yml`;
+  const composePath = path.join(
+    os.tmpdir(),
+    `docker-compose-${uniqueName}.yml`
+  );
 
-  if (!fs.existsSync("packages/postgres/pgbouncer/temp")) {
-    fs.mkdirSync("packages/postgres/pgbouncer/temp", { recursive: true });
+  if (!fs.existsSync(os.tmpdir())) {
+    fs.mkdirSync(os.tmpdir(), { recursive: true });
   }
 
   fs.writeFileSync(composePath, updatedCompose);
