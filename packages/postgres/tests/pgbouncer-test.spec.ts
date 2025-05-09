@@ -22,7 +22,7 @@ import {
   PgBouncerDatabaseTenants as DatabaseTenants,
 } from "../src/pgbouncer/strategies/database";
 import { DEFAULT_SETTINGS_TENANT_FIELD } from "../src/strategies/base";
-import path from "path";
+import * as path from "path";
 
 export function generateDockerComposeFile(
   testName: string,
